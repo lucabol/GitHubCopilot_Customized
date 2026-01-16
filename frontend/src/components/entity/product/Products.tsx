@@ -87,7 +87,7 @@ export default function Products() {
 
   if (isLoading) {
     return (
-      <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-100'} pt-20 px-4 transition-colors duration-300`}>
+      <div className={`min-h-screen ${darkMode ? 'bg-dark' : 'bg-gray-100'} pt-20 px-4 transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
@@ -99,7 +99,7 @@ export default function Products() {
 
   if (error) {
     return (
-      <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-100'} pt-20 px-4 transition-colors duration-300`}>
+      <div className={`min-h-screen ${darkMode ? 'bg-dark' : 'bg-gray-100'} pt-20 px-4 transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-red-500 text-center">Failed to fetch products</div>
         </div>
@@ -108,7 +108,7 @@ export default function Products() {
   }
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-100'} pt-20 pb-16 px-4 transition-colors duration-300`}>
+    <div className={`min-h-screen ${darkMode ? 'bg-dark' : 'bg-gray-100'} pt-20 pb-16 px-4 transition-colors duration-300`}>
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb */}
         <div className={`text-sm mb-4 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
