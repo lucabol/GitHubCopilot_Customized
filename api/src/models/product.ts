@@ -32,6 +32,14 @@
  *           type: string
  *           format: date-time
  *           description: When the product was created
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: When the product was last updated
+ *         lastStockUpdate:
+ *           type: string
+ *           format: date-time
+ *           description: When the stock level was last updated
  *         discount:
  *           type: number
  *           format: float
@@ -48,5 +56,7 @@ export interface Product {
     imgName: string;
     stockLevel: number;
     createdAt: string;
+    updatedAt: string;
+    lastStockUpdate: string;
     discount?: number;
 }

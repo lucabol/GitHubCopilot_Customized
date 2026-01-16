@@ -17,6 +17,10 @@ interface Product {
   sku: string;
   unit: string;
   imgName: string;
+  stockLevel: number;
+  createdAt: string;
+  updatedAt: string;
+  lastStockUpdate: string;
   discount?: number;
 }
 
@@ -37,17 +41,30 @@ export default function ProductForm({ product, suppliers, onClose, onSave }: Pro
       sku: '',
       unit: '',
       supplierId: suppliers[0]?.supplierId || 0,
-      imgName: ''
+      imgName: '',
+      stockLevel: 0,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      lastStockUpdate: new Date().toISOString()
     }
   );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const dataToSubmit = {
+        ...formData,
+        updatedAt: new Date().toISOString(),
+        lastStockUpdate: formData.stockLevel !== product?.stockLevel ? new Date().toISOString() : formData.lastStockUpdate
+      };
+      
       if (product) {
-        await axios.put(`${api.baseURL}${api.endpoints.products}/${product.productId}`, formData);
+        await axios.put(`${api.baseURL}${api.endpoints.products}/${product.productId}`, dataToSubmit);
       } else {
-        await axios.post(`${api.baseURL}${api.endpoints.products}`, formData);
+        // Let backend generate the product ID
+        const newProduct: Partial<Product> = { ...dataToSubmit };
+        delete newProduct.productId;
+        await axios.post(`${api.baseURL}${api.endpoints.products}`, newProduct);
       }
       onSave();
       onClose();
@@ -122,6 +139,17 @@ export default function ProductForm({ product, suppliers, onClose, onSave }: Pro
               onChange={(e) => setFormData({ ...formData, imgName: e.target.value })}
               className={`w-full px-3 py-2 ${darkMode ? 'bg-gray-700 text-light' : 'bg-gray-100 text-gray-800'} rounded transition-colors duration-300`}
               required
+            />
+          </div>
+          <div>
+            <label className={`block ${darkMode ? 'text-light' : 'text-gray-700'} mb-1 transition-colors duration-300`}>Stock Level</label>
+            <input
+              type="number"
+              value={formData.stockLevel}
+              onChange={(e) => setFormData({ ...formData, stockLevel: parseInt(e.target.value) || 0 })}
+              className={`w-full px-3 py-2 ${darkMode ? 'bg-gray-700 text-light' : 'bg-gray-100 text-gray-800'} rounded transition-colors duration-300`}
+              required
+              min="0"
             />
           </div>
           <div>
