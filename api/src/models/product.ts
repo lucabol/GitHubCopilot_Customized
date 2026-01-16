@@ -28,6 +28,10 @@
  *         stockLevel:
  *           type: integer
  *           description: Current stock level of the product
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: When the product was created
  *         discount:
  *           type: number
  *           format: float
@@ -42,5 +46,7 @@ export interface Product {
     sku: string;
     unit: string;
     imgName: string;
+    stockLevel: number;
+    createdAt: string;
     discount?: number;
 }
