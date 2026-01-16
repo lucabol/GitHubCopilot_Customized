@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useCart } from '../context/CartContext';
 import { useState } from 'react';
 
 export default function Navigation() {
   const { isLoggedIn, isAdmin, logout } = useAuth();
   const { darkMode, toggleTheme } = useTheme();
+  const { getCartItemCount } = useCart();
   const [adminMenuOpen, setAdminMenuOpen] = useState(false);
+  const cartItemCount = getCartItemCount();
 
   return (
     <nav className={`${darkMode ? 'bg-dark/95' : 'bg-white/95'} backdrop-blur-sm fixed w-full z-50 shadow-md transition-colors duration-300`}>
@@ -29,6 +32,14 @@ export default function Navigation() {
             <div className="ml-10 flex items-baseline space-x-4">
               <Link to="/" className={`${darkMode ? 'text-light hover:text-primary' : 'text-gray-700 hover:text-primary'} px-3 py-2 rounded-md text-sm font-medium transition-colors`}>Home</Link>
               <Link to="/products" className={`${darkMode ? 'text-light hover:text-primary' : 'text-gray-700 hover:text-primary'} px-3 py-2 rounded-md text-sm font-medium transition-colors`}>Products</Link>
+              <Link to="/cart" className={`${darkMode ? 'text-light hover:text-primary' : 'text-gray-700 hover:text-primary'} px-3 py-2 rounded-md text-sm font-medium transition-colors relative`}>
+                Cart
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartItemCount}
+                  </span>
+                )}
+              </Link>
               <Link to="/about" className={`${darkMode ? 'text-light hover:text-primary' : 'text-gray-700 hover:text-primary'} px-3 py-2 rounded-md text-sm font-medium transition-colors`}>About us</Link>
               {isAdmin && (
                 <div className="relative">
