@@ -109,7 +109,13 @@ let products: Product[] = [...seedProducts];
 
 // Create a new product
 router.post('/', (req, res) => {
-  const newProduct: Product = req.body;
+  const newProduct: Product = {
+    ...req.body,
+    productId: Math.max(...products.map(p => p.productId), 0) + 1,
+    createdAt: req.body.createdAt || new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    lastStockUpdate: req.body.lastStockUpdate || new Date().toISOString()
+  };
   products.push(newProduct);
   res.status(201).json(newProduct);
 });
@@ -133,7 +139,11 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
   const index = products.findIndex(p => p.productId === parseInt(req.params.id));
   if (index !== -1) {
-    products[index] = req.body;
+    products[index] = {
+      ...req.body,
+      productId: parseInt(req.params.id),
+      updatedAt: new Date().toISOString()
+    };
     res.json(products[index]);
   } else {
     res.status(404).send('Product not found');

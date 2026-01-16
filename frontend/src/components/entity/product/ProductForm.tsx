@@ -61,10 +61,10 @@ export default function ProductForm({ product, suppliers, onClose, onSave }: Pro
       if (product) {
         await axios.put(`${api.baseURL}${api.endpoints.products}/${product.productId}`, dataToSubmit);
       } else {
-        await axios.post(`${api.baseURL}${api.endpoints.products}`, {
-          ...dataToSubmit,
-          productId: Math.floor(Math.random() * 100000) + 100
-        });
+        // Let backend generate the product ID
+        const newProduct = { ...dataToSubmit };
+        delete (newProduct as any).productId;
+        await axios.post(`${api.baseURL}${api.endpoints.products}`, newProduct);
       }
       onSave();
       onClose();

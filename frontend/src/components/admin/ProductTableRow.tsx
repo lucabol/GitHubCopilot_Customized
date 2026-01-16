@@ -181,7 +181,7 @@ export default function ProductTableRow({
                   ? 'bg-yellow-600'
                   : 'bg-green-600'
               }`}
-              style={{ width: `${Math.min((product.stockLevel / 100) * 100, 100)}%` }}
+              style={{ width: `${Math.min(product.stockLevel, 100)}%` }}
             ></div>
           </div>
         </td>
