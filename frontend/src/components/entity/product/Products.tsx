@@ -54,6 +54,12 @@ export default function Products() {
     product.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Reset to page 1 when search term changes
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
   const totalProducts = filteredProducts?.length || 0;
   const totalPages = Math.ceil(totalProducts / rowsPerPage);
   const startIndex = (currentPage - 1) * rowsPerPage;
@@ -128,7 +134,7 @@ export default function Products() {
             type="text"
             placeholder="Search products..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => handleSearchChange(e.target.value)}
             className={`w-full px-4 py-2 ${darkMode ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-gray-800 border-gray-300'} rounded-lg border focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors duration-300`}
           />
           <svg 
