@@ -151,4 +151,10 @@ router.delete('/:id', (req, res) => {
     }
 });
 
+// Reset suppliers to seed data (for testing)
+export const resetSuppliers = () => {
+    suppliers.length = 0;
+    suppliers.push(...seedSuppliers);
+};
+
 export default router;

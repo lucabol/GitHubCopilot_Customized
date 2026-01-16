@@ -151,4 +151,10 @@ router.delete('/:id', (req, res) => {
   }
 });
 
+// Reset products to seed data (for testing)
+export const resetProducts = () => {
+  products.length = 0;
+  products.push(...seedProducts);
+};
+
 export default router;

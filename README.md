@@ -15,6 +15,9 @@ This isn't just another demo app - it's a carefully crafted showcase that demons
 - 🔄 **CI/CD & IaC** - Generate deployment workflows and infrastructure code with natural language
 - 🎯 **Custom Instructions** - Show how Copilot can be tailored to understand internal frameworks and standards
 - 📜 **Custom Prompt Files** - Automate repetitive tasks and documentation updates with ease
+- 🛒 **Shopping Cart** - Full-featured cart with quantity controls, coupon codes, and order summaries
+- 🔐 **Authentication** - User login with admin role detection for @github.com emails
+- 🌙 **Dark/Light Theme** - Persistent theme switching with localStorage support
 
 ---
 
@@ -92,9 +95,10 @@ erDiagram
 ```
 
 ### Tech Stack
-- **Frontend**: React 18+, TypeScript, Tailwind CSS, Vite
+- **Frontend**: React 19, TypeScript, Tailwind CSS, Vite
 - **Backend**: Express.js, TypeScript, OpenAPI/Swagger
-- **DevOps**: Docker
+- **DevOps**: Docker, Azure Container Apps
+- **State Management**: React Context API (Cart, Auth, Theme)
 
 ---
 
