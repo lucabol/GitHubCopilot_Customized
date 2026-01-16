@@ -141,7 +141,7 @@ export default function Products() {
       if (e.key === 'ArrowLeft' && currentPage > 1) {
         setCurrentPage(prev => prev - 1);
       }
-      if (e.key === 'ArrowRight' && filteredProducts && currentPage < Math.ceil(filteredProducts.length / itemsPerPage)) {
+      if (e.key === 'ArrowRight' && sortedProducts && currentPage < totalPages) {
         setCurrentPage(prev => prev + 1);
       }
       // Select all with Ctrl+A
@@ -157,7 +157,7 @@ export default function Products() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentPage, selectedItems, filteredProducts]);
+  }, [currentPage, selectedItems, filteredProducts, sortedProducts, totalPages]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -350,7 +350,7 @@ export default function Products() {
                       </span>
                     </th>
                     <th 
-                      className="px-6 py-4 text-left cursor-pointer hover:bg-gray-800/50 transition-colors duration-150"
+                      className={`px-6 py-4 text-left cursor-pointer transition-colors duration-150 ${darkMode ? 'hover:bg-gray-700/50' : 'hover:bg-gray-200/50'}`}
                       onClick={() => handleSort('name')}
                     >
                       <div className="flex items-center space-x-1">
@@ -365,7 +365,7 @@ export default function Products() {
                       </div>
                     </th>
                     <th 
-                      className="px-6 py-4 text-left cursor-pointer hover:bg-gray-800/50 transition-colors duration-150"
+                      className={`px-6 py-4 text-left cursor-pointer transition-colors duration-150 ${darkMode ? 'hover:bg-gray-700/50' : 'hover:bg-gray-200/50'}`}
                       onClick={() => handleSort('createdAt')}
                     >
                       <div className="flex items-center space-x-1">
@@ -380,7 +380,7 @@ export default function Products() {
                       </div>
                     </th>
                     <th 
-                      className="px-6 py-4 text-left cursor-pointer hover:bg-gray-800/50 transition-colors duration-150"
+                      className={`px-6 py-4 text-left cursor-pointer transition-colors duration-150 ${darkMode ? 'hover:bg-gray-700/50' : 'hover:bg-gray-200/50'}`}
                       onClick={() => handleSort('status')}
                     >
                       <div className="flex items-center space-x-1">
@@ -395,7 +395,7 @@ export default function Products() {
                       </div>
                     </th>
                     <th 
-                      className="px-6 py-4 text-left cursor-pointer hover:bg-gray-800/50 transition-colors duration-150"
+                      className={`px-6 py-4 text-left cursor-pointer transition-colors duration-150 ${darkMode ? 'hover:bg-gray-700/50' : 'hover:bg-gray-200/50'}`}
                       onClick={() => handleSort('price')}
                     >
                       <div className="flex items-center space-x-1">
