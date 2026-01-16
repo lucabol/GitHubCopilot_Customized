@@ -18,6 +18,8 @@ interface Product {
   unit: string;
   imgName: string;
   discount?: number;
+  stockLevel: number;
+  createdAt: string;
 }
 
 interface ProductFormProps {
@@ -37,7 +39,9 @@ export default function ProductForm({ product, suppliers, onClose, onSave }: Pro
       sku: '',
       unit: '',
       supplierId: suppliers[0]?.supplierId || 0,
-      imgName: ''
+      imgName: '',
+      stockLevel: 0,
+      createdAt: new Date().toISOString()
     }
   );
 
@@ -155,6 +159,29 @@ export default function ProductForm({ product, suppliers, onClose, onSave }: Pro
               step="1"
             />
             <p className={`text-xs mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Leave empty for no discount</p>
+          </div>
+          <div>
+            <label className={`block ${darkMode ? 'text-light' : 'text-gray-700'} mb-1 transition-colors duration-300`}>Stock Level</label>
+            <input
+              type="number"
+              value={formData.stockLevel}
+              onChange={(e) => setFormData({ ...formData, stockLevel: parseInt(e.target.value) || 0 })}
+              className={`w-full px-3 py-2 ${darkMode ? 'bg-gray-700 text-light' : 'bg-gray-100 text-gray-800'} rounded transition-colors duration-300`}
+              required
+              min="0"
+              max="1000"
+            />
+            <p className={`text-xs mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>0 = Out of stock, 1-10 = Low stock, &gt;10 = In stock</p>
+          </div>
+          <div>
+            <label className={`block ${darkMode ? 'text-light' : 'text-gray-700'} mb-1 transition-colors duration-300`}>Created At</label>
+            <input
+              type="datetime-local"
+              value={formData.createdAt ? new Date(formData.createdAt).toISOString().slice(0, 16) : ''}
+              onChange={(e) => setFormData({ ...formData, createdAt: new Date(e.target.value).toISOString() })}
+              className={`w-full px-3 py-2 ${darkMode ? 'bg-gray-700 text-light' : 'bg-gray-100 text-gray-800'} rounded transition-colors duration-300`}
+              required
+            />
           </div>
           <div className="flex justify-end space-x-2">
             <button
