@@ -26,6 +26,8 @@ interface Product {
   imgName: string;
   supplier?: Supplier;
   discount?: number;
+  stockLevel: number;
+  createdAt: string;
 }
 
 type SortField = 'name' | 'price' | 'sku' | 'unit' | 'supplier';
