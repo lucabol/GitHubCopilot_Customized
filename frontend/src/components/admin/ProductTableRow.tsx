@@ -7,11 +7,14 @@ interface Product {
   description: string;
   price: number;
   sku: string;
+  unit: string;
+  imgName: string;
   stockLevel: number;
   supplierId: number;
   discount?: number;
   createdAt: string;
   updatedAt: string;
+  lastStockUpdate: string;
 }
 
 interface ProductTableRowProps {
