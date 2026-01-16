@@ -81,52 +81,6 @@ export default function Products() {
   const { data: products, isLoading, error } = useQuery('products', fetchProducts);
   const { darkMode } = useTheme();
 
-  // Handle keyboard shortcuts
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Close dropdown on Escape
-      if (e.key === 'Escape') {
-        setOpenDropdownId(null);
-        setShowDeleteConfirm(false);
-      }
-      // Pagination with arrow keys
-      if (e.key === 'ArrowLeft' && currentPage > 1) {
-        setCurrentPage(prev => prev - 1);
-      }
-      if (e.key === 'ArrowRight' && filteredProducts && currentPage < Math.ceil(filteredProducts.length / itemsPerPage)) {
-        setCurrentPage(prev => prev + 1);
-      }
-      // Select all with Ctrl+A
-      if (e.ctrlKey && e.key === 'a' && filteredProducts) {
-        e.preventDefault();
-        if (selectedItems.size === filteredProducts.length) {
-          setSelectedItems(new Set());
-        } else {
-          setSelectedItems(new Set(filteredProducts.map(p => p.productId)));
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentPage, selectedItems, filteredProducts]);
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = () => setOpenDropdownId(null);
-    if (openDropdownId !== null) {
-      document.addEventListener('click', handleClickOutside);
-      return () => document.removeEventListener('click', handleClickOutside);
-    }
-  }, [openDropdownId]);
-
-  // Show toast
-  const showToastMessage = (message: string) => {
-    setToastMessage(message);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-  };
-
   // Filter products
   const filteredProducts = useMemo(() => {
     return products?.filter(product => 
@@ -174,6 +128,52 @@ export default function Products() {
   }, [sortedProducts, currentPage]);
 
   const totalPages = Math.ceil((sortedProducts?.length || 0) / itemsPerPage);
+
+  // Handle keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Close dropdown on Escape
+      if (e.key === 'Escape') {
+        setOpenDropdownId(null);
+        setShowDeleteConfirm(false);
+      }
+      // Pagination with arrow keys
+      if (e.key === 'ArrowLeft' && currentPage > 1) {
+        setCurrentPage(prev => prev - 1);
+      }
+      if (e.key === 'ArrowRight' && filteredProducts && currentPage < Math.ceil(filteredProducts.length / itemsPerPage)) {
+        setCurrentPage(prev => prev + 1);
+      }
+      // Select all with Ctrl+A
+      if (e.ctrlKey && e.key === 'a' && filteredProducts) {
+        e.preventDefault();
+        if (selectedItems.size === filteredProducts.length) {
+          setSelectedItems(new Set());
+        } else {
+          setSelectedItems(new Set(filteredProducts.map(p => p.productId)));
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentPage, selectedItems, filteredProducts]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => setOpenDropdownId(null);
+    if (openDropdownId !== null) {
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [openDropdownId]);
+
+  // Show toast
+  const showToastMessage = (message: string) => {
+    setToastMessage(message);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
 
   // Handle sorting
   const handleSort = (field: SortField) => {
