@@ -62,8 +62,8 @@ export default function ProductForm({ product, suppliers, onClose, onSave }: Pro
         await axios.put(`${api.baseURL}${api.endpoints.products}/${product.productId}`, dataToSubmit);
       } else {
         // Let backend generate the product ID
-        const newProduct = { ...dataToSubmit };
-        delete (newProduct as any).productId;
+        const newProduct: Partial<Product> = { ...dataToSubmit };
+        delete newProduct.productId;
         await axios.post(`${api.baseURL}${api.endpoints.products}`, newProduct);
       }
       onSave();

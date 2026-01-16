@@ -24,7 +24,7 @@ interface ProductTableRowProps {
   onEdit: (product: Product) => void;
   onDelete: (productId: number) => void;
   onDuplicate: (product: Product) => void;
-  onInlineUpdate: (productId: number, field: string, value: any) => void;
+  onInlineUpdate: (productId: number, field: string, value: string | number) => void;
   supplierName: string;
 }
 
@@ -40,7 +40,7 @@ export default function ProductTableRow({
 }: ProductTableRowProps) {
   const { darkMode } = useTheme();
   const [editingField, setEditingField] = useState<string | null>(null);
-  const [editValue, setEditValue] = useState<any>(null);
+  const [editValue, setEditValue] = useState<string | number | null>(null);
   const [showContextMenu, setShowContextMenu] = useState(false);
   const [contextMenuPos, setContextMenuPos] = useState({ x: 0, y: 0 });
 
@@ -58,7 +58,7 @@ export default function ProductTableRow({
     setShowContextMenu(true);
   };
 
-  const handleStartEdit = (field: string, currentValue: any) => {
+  const handleStartEdit = (field: string, currentValue: string | number) => {
     setEditingField(field);
     setEditValue(currentValue);
   };

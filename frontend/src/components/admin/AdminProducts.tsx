@@ -184,7 +184,9 @@ export default function AdminProducts() {
         return (a[sortField] - b[sortField]) * modifier;
       }
       if (sortField === 'supplier') {
-        return getSupplierName(a.supplierId).localeCompare(getSupplierName(b.supplierId)) * modifier;
+        const supplierA = suppliers.find(s => s.supplierId === a.supplierId);
+        const supplierB = suppliers.find(s => s.supplierId === b.supplierId);
+        return (supplierA?.name || '').localeCompare(supplierB?.name || '') * modifier;
       }
       return a[sortField].localeCompare(b[sortField]) * modifier;
     });
@@ -350,7 +352,7 @@ export default function AdminProducts() {
   };
 
   // Inline update handler
-  const handleInlineUpdate = async (productId: number, field: string, value: any) => {
+  const handleInlineUpdate = async (productId: number, field: string, value: string | number) => {
     try {
       const product = products.find(p => p.productId === productId);
       if (!product) return;
@@ -392,7 +394,7 @@ export default function AdminProducts() {
 
   const handleDuplicateProduct = async (product: Product) => {
     try {
-      const newProduct = {
+      const newProduct: Partial<Product> = {
         ...product,
         productId: Math.max(...products.map(p => p.productId)) + 1,
         name: `${product.name} (Copy)`,
@@ -401,7 +403,6 @@ export default function AdminProducts() {
         updatedAt: new Date().toISOString(),
         lastStockUpdate: new Date().toISOString()
       };
-      delete newProduct.supplier;
       await axios.post(`${api.baseURL}${api.endpoints.products}`, newProduct);
       await refetchProducts();
       showNotification('Product duplicated', 'success');
